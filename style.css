@@ -1,56 +1,56 @@
-.fundo{
+.fundo {
     background-color: rgb(255, 255, 255);
     height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
 }
-.calculadora{
+
+.container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
     border-radius: 15px;
     padding: 15px;
-    background-color: rgb(184, 184, 184);
+    background-color: rgb(0, 124, 240);
 }
-.botao{
+
+.container table button {
     width: 50px;
     height: 50px;
     font-size: 25px;
-    margin: 3;
+    margin: 3px;
     cursor: pointer;
     background-color: rgb(31,31,31);
     border: none;
     color: white;
+    border-radius: 50%;
+    padding: 5px;
 }
-.botao:hover{
+
+.container table button:hover {
     background-color: black;
 }
-.botaoIgual{
+
+.container table .buttonEqual {
     width: 50px;
     height: 106px;
     font-size: 25px;
-    cursor: pointer;
-    margin: 3;
-    background-color: rgb(31,31,31);
-    border: none;
-    color: white;
-    
-}
-.botaoZero{
-    width: 106px;
-    height: 50px;
-    font-size: 25px;
-    margin: 3;
-    cursor: pointer;
-    background-color: rgb(31,31,31);
-    border: none;
-    color: white;
-    
 }
 
-#resultado{
-    width: 207px;
-    height: 30px;
-    margin: 5px;
-    background-color: white;
+.container table .buttonEqual:hover {
+    background-color: black;
+}
+
+#input {
+    width: 224px;
+    height: 50px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+}
+
+#title {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
