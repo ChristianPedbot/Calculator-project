@@ -1,0 +1,56 @@
+.fundo{
+    background-color: rgb(255, 255, 255);
+    height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.calculadora{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 15px;
+    padding: 15px;
+    background-color: rgb(184, 184, 184);
+}
+.botao{
+    width: 50px;
+    height: 50px;
+    font-size: 25px;
+    margin: 3;
+    cursor: pointer;
+    background-color: rgb(31,31,31);
+    border: none;
+    color: white;
+}
+.botao:hover{
+    background-color: black;
+}
+.botaoIgual{
+    width: 50px;
+    height: 106px;
+    font-size: 25px;
+    cursor: pointer;
+    margin: 3;
+    background-color: rgb(31,31,31);
+    border: none;
+    color: white;
+    
+}
+.botaoZero{
+    width: 106px;
+    height: 50px;
+    font-size: 25px;
+    margin: 3;
+    cursor: pointer;
+    background-color: rgb(31,31,31);
+    border: none;
+    color: white;
+    
+}
+
+#resultado{
+    width: 207px;
+    height: 30px;
+    margin: 5px;
+    background-color: white;
+}
