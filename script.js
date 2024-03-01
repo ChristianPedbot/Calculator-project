@@ -4,33 +4,20 @@ const buttonEqual = document.getElementById("buttonEqual");
 const buttonNumber = document.querySelectorAll(".buttonNumber");
 const buttonFunction = document.querySelectorAll(".buttonFunction");
 
-buttonNumber.forEach(buttonNum => {
-    buttonNum.addEventListener("click", function() {
-        let number = this.textContent;
-        display.textContent += number;
-    });
-});
+const MAX_CHARACTERS = 20;
 
-buttonFunction.forEach(buttonFunct => {
-    buttonFunct.addEventListener("click", function() {
-        let funct = this.textContent;
-        display.textContent += funct;
-    });
-});
-
-buttonClear.onclick = function() {
-    display.textContent = "";
+function evalManual(expression) {
+    expression = expression.replace(/=/g, '');
+    return eval(expression);
 }
 
 function evaluateExpression(expression) {
-
-    // Verifica se a expressão contém caracteres inválidos
     var validChars = /^[0-9+\-*/().\s]+=?$/;
     if (!validChars.test(expression)) {
         return 'Erro';
     }
     try {
-        var result = evalManual(expression);
+        let result = evalManual(expression);
         if (!isFinite(result)) {
             return 'Erro';
         }
@@ -40,13 +27,41 @@ function evaluateExpression(expression) {
     }
 }
 
-function evalManual(expression) {
-    expression = expression.replace(/=/g, '');
-    return eval(expression);
+buttonNumber.forEach(buttonNum => {
+    buttonNum.addEventListener("click", function() {
+        if (display.textContent.length < MAX_CHARACTERS) {
+            let number = this.textContent;
+            display.textContent += number;
+        }
+    });
+});
+
+buttonFunction.forEach(buttonFunct => {
+    buttonFunct.addEventListener("click", function() {
+        if (display.textContent.length < MAX_CHARACTERS) {
+            let funct = this.textContent;
+            let displayContent = display.textContent.trim(); 
+            let lastChar = displayContent[displayContent.length - 1]; 
+            if (lastChar === '+' || lastChar === '-' || lastChar === '*' || lastChar === '/') {
+                return;
+            } else {
+                display.textContent += funct;
+            }
+        }
+    });
+});
+
+buttonClear.onclick = function() {
+    display.textContent = "";
 }
 
 buttonEqual.onclick = function() {
-    var expression = display.textContent;
-    var result = evaluateExpression(expression);
+    let expression = display.textContent;
+    if (expression.includes('/0') || expression.includes('*0')) {
+        display.textContent = '0';
+        expression = expression.replace(/=+$/, '');
+        return;
+    }
+    let result = evaluateExpression(expression);
     display.textContent = result;
 }
