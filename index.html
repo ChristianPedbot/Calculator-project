@@ -8,42 +8,44 @@
 <body>
     <div class="fundo">
         <div class="container">
-            <h1 id="title">Calculator</h1>
-            <input id="input" type="number">
+            <h1 id="title">Ped Calculator</h1>
+            <div id="display"></div> 
             <table>
-                <div class="buttons">
+                <tbody class="buttons">
                     <tr>
                         <td><button id="buttonClear">C</button></td>
-                        <td><button id="buttonPer">%</button></td>
-                        <td><button id="buttonDiv">/</button></td>    
-                        <td><button id="buttonMulti">X</button></td>
+                        <td><button class="buttonFunction" id="buttonPer">%</button></td>
+                        <td><button class="buttonFunction" id="buttonDiv">/</button></td>    
+                        <td><button class="buttonFunction" id="buttonMulti">*</button></td>
                     </tr>
                     <tr>
-                        <td><button id="buttonSeven">7</button></td>
-                        <td><button id="buttonEight">8</button></td>
-                        <td><button id="buttonNine">9</button></td>    
-                        <td><button id="buttonSub">-</button></td>
+                        <td><button class="buttonNumber" id="buttonSeven">7</button></td>
+                        <td><button class="buttonNumber" id="buttonEight">8</button></td>
+                        <td><button class="buttonNumber" id="buttonNine">9</button></td>    
+                        <td><button class="buttonFunction" id="buttonSub">-</button></td>
                     </tr>
                     <tr>
-                        <td><button id="buttonFour">4</button></td>
-                        <td><button id="buttonFive">5</button></td>
-                        <td><button id="buttonSix">6</button></td>    
-                        <td><button id="buttonAdd">+</button></td>
+                        <td><button class="buttonNumber" id="buttonFour">4</button></td>
+                        <td><button class="buttonNumber" id="buttonFive">5</button></td>
+                        <td><button class="buttonNumber" id="buttonSix">6</button></td>    
+                        <td><button class="buttonFunction" id="buttonAdd">+</button></td>
                     </tr>
                     <tr>
-                        <td><button id="buttonOne">1</button></td>
-                        <td><button id="buttonTwo">2</button></td>
-                        <td><button id="buttonThree">3</button></td>    
-                        <td rowspan="2"><button class="buttonEqual">=</button></td>
+                        <td><button class="buttonNumber" id="buttonOne">1</button></td>
+                        <td><button class="buttonNumber" id="buttonTwo">2</button></td>
+                        <td><button class="buttonNumber" id="buttonThree">3</button></td>    
+                        <td rowspan="2"><button id="buttonEqual" class="buttonFunction">=</button></td>
                     </tr>
                     <tr>
-                        <td><button id="buttonZero">0</button></td>
-                        <td><button id="buttonPoint">.</button></td>
-                        <td><button id="buttonPar">()</button></td>
+                        <td><button class="buttonNumber" id="buttonZero">0</button></td>
+                        <td><button class="buttonFunction" id="buttonPoint">.</button></td>
+                        <td><button class="buttonFunction" id="buttonPar">( )</button></td>
                     </tr>
-                </div>
+                </tbody>
             </table>
         </div>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
