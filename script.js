@@ -54,17 +54,6 @@ buttonPer.addEventListener("click", function() {
     display.textContent += '%';
 })
 
-buttonPer.addEventListener("click", function() {
-    let expression = display.textContent;
-    if (!expression.includes('%')) {
-        display.textContent += '%';
-    } else {
-        expression = expression.replace(/%/g, '*0.01');
-        let result = evaluateExpression(expression);
-        display.textContent = result * 100 + "*";
-    }
-})
-
 buttonNumber.forEach(buttonNum => {
     buttonNum.addEventListener("click", function() {
         if (display.textContent.length < MAX_CHARACTERS) {
@@ -99,6 +88,17 @@ buttonEqual.onclick = function() {
     let result = evaluateExpression(expression);
     display.textContent = result;
 }
+
+buttonPer.addEventListener("click", function() {
+    let expression = display.textContent;
+    if (!expression.includes('%')) {
+        display.textContent += '%';
+    } else {
+        expression = expression.replace(/%/g, '*0.01');
+        let result = evaluateExpression(expression);
+        display.textContent = result * 100 + "*";
+    }
+})
 
 buttonClear.onclick = function() {
     display.textContent = "";
