@@ -1,11 +1,14 @@
-const display = document.getElementById("display");
+const displayOne = document.getElementById("displayOne");
+const displayTwo = document.getElementById("displayTwo");
 const buttonClear = document.getElementById("buttonClear");
 const buttonPer = document.getElementById("buttonPer");
 const buttonEqual = document.getElementById("buttonEqual");
+const buttonRem = document.getElementById("buttonRem");
 const buttonNumber = document.querySelectorAll(".buttonNumber");
 const buttonFunction = document.querySelectorAll(".buttonFunction");
 
-const MAX_CHARACTERS = 20;
+
+const MAX_CHARACTERS = 15;
 
 function evalManual(expression) {
     expression = expression.replace(/=/g, '');
@@ -25,7 +28,7 @@ function evaluateExpression(expression) {
         }
         return result;
     } catch (error) {
-        return 'Erro';
+        return 'Error';
     }
 }
 
@@ -35,71 +38,97 @@ document.addEventListener('keydown', function(event) {
         buttonClear.click();
         return;
     }
-    if (display.textContent.length < MAX_CHARACTERS) {
-        if ((key >= '0' && key <= '9') || key === '.' || key === '+' || key === '-' || key === '*' || key === '/' || key === '%' || key === 'Enter' ){
+    if (key === 'Backspace') {
+        buttonRem.click();
+        return;
+    }
+    if (displayOne.textContent.length < MAX_CHARACTERS) {
+        if ((key >= '0' && key <= '9') || key === '.' || key === '+' || key === '-' || key === '*' || key === '/' || key === '%' || key === 'Enter'|| key === '(' || key === ')'){
             if (key === 'Enter') {
                 buttonEqual.click();
                 return;
             }
-            if (key === '%') {
+            if (key === '%' && !displayOne.textContent.includes('%')) {
                 buttonPer.click();
+            } else if (key === '.' && displayOne.textContent.includes('.')) {
+                return;
             } else {
-                display.textContent += key;
+                displayOne.textContent += key;
             }
         }
     }
 })
 
 buttonPer.addEventListener("click", function() {
-    display.textContent += '%';
+    displayOne.textContent += '%';
 })
 
 buttonNumber.forEach(buttonNum => {
     buttonNum.addEventListener("click", function() {
-        if (display.textContent.length < MAX_CHARACTERS) {
+        if (displayOne.textContent.length < MAX_CHARACTERS) {
             let number = this.textContent;
-            display.textContent += number;
+            if (number === '.' && displayOne.textContent.includes('.')) {
+                return;
+            }
+            displayOne.textContent += number;
         }
     })
 })
 
 buttonFunction.forEach(buttonFunct => {
     buttonFunct.addEventListener("click", function() {
-        if (display.textContent.length < MAX_CHARACTERS) {
+        if (displayOne.textContent.length < MAX_CHARACTERS) {
             let funct = this.textContent;
-            let displayContent = display.textContent.trim(); 
-            let lastChar = displayContent[displayContent.length - 1]; 
+            let displayOneContent = displayOne.textContent.trim(); 
+            let lastChar = displayOneContent[displayOneContent.length - 1]; 
             if (lastChar === '+' || lastChar === '-' || lastChar === '*' || lastChar === '/') {
                 return;
             } else {
-                display.textContent += funct;
+                displayOne.textContent += funct;
             }
         }
     })
 })
 
 buttonEqual.onclick = function() {
-    let expression = display.textContent;
+    let expression = displayOne.textContent;
     if (expression.includes('/0') || expression.includes('*0')) {
-        display.textContent = '0';
+        displayOne.textContent = '0';
         expression = expression.replace(/=+$/, '');
         return;
     }
-    let result = evaluateExpression(expression);
-    display.textContent = result;
+    if (displayOne.textContent.length === MAX_CHARACTERS){
+        displayTwo.textContent = "limit reached";
+    } else {
+        let result = evaluateExpression(expression);
+        displayTwo.textContent = result;
+        displayOne.textContent = expression.replace(/=/g, '');
+    }
+
 }
 
 buttonPer.addEventListener("click", function() {
-    let expression = display.textContent;
+    let expression = displayOne.textContent;
     if (!expression.includes('%')) {
-        display.textContent += '%';
+        displayOne.textContent += '%';
     } else {
         expression = expression.replace(/%/g, '*0.01');
         let result = evaluateExpression(expression);
-        display.textContent = result * 100 + "*";
+        displayOne.textContent = result * 100 + "*";
     }
 })
 
 buttonClear.onclick = function() {
-    display.textContent = "";
+    displayOne.textContent = "";
+    displayTwo.textContent = "";
+}
+
+buttonRem.onclick = function() {
+    if (displayOne.textContent.endsWith("<-")) {
+        displayOne.textContent = displayOne.textContent.slice(0, -3);
+    } else if (displayOne.textContent.length >= MAX_CHARACTERS) {
+        displayOne.textContent = displayOne.textContent.slice(0, -1);
+    } else {
+        displayOne.textContent = displayOne.textContent.slice(0, -3);
+    }
 }
