@@ -8,48 +8,45 @@
 <body>
     <div class="fundo">
         <div class="container">
-            <h1 id="title">Calculator</h1>
+            <img id="img" src="assets/images/image-removebg-preview.png" alt="">
             <div class="display" id="displayOne"></div> 
-            <div class="display" id="displayTwo"></div> 
             <table>
                 <tbody class="buttons">
                     <tr>
                         <td><button id="buttonClear">C</button></td>
-                        <td><button id="buttonRem" class="buttonFunction"><-</button></td>
-                        <td><button aria-colspan="4" id="buttonEqual" class="buttonFunction">=</button></td> 
-                    </tr>
-                    <tr>
+                        <td><button class="buttonFunction" id="buttonRem"><-</button></td>
                         <td><button class="buttonFunction" id="buttonPer">%</button></td>
+                        <td><button class="buttonFunction" id="buttonPoint">.</button></td>  
+                    </tr>
+                    <tr>
+                        <td><button class="buttonFunction" id="buttonDiv">/</button></td>  
                         <td><button class="buttonFunction" id="buttonAdd">+</button></td>
-                        <td><button class="buttonFunction" id="buttonPoint">.</button></td>                       
-                    </tr>
-                    <tr>
-                        <td><button class="buttonFunction" id="buttonDiv">/</button></td>   
                         <td><button class="buttonFunction" id="buttonMulti">*</button></td>
-                        <td><button class="buttonFunction" id="buttonSub">-</button></td>
+                        <td><button class="buttonFunction" id="buttonSub">-</button></td>                  
+
                     </tr>
                     <tr>
-                        <td><button class="buttonNumber" id="buttonSeven">7</button></td>
-                        <td><button class="buttonNumber" id="buttonEight">8</button></td>
+                        <td><button class="buttonFunction" id="buttonParOpen">(</button></td>
+                        <td><button class="buttonFunction" id="buttonParClose">)</button></td>
                         <td><button class="buttonNumber" id="buttonNine">9</button></td>   
+                        <td><button class="buttonNumber" id="buttonEight">8</button></td>
                     </tr>
                     <tr>
-                        <td><button class="buttonNumber" id="buttonFour">4</button></td>
+
+                        <td><button class="buttonNumber" id="buttonSeven">7</button></td>
+                        <td><button class="buttonNumber" id="buttonSix">6</button></td>   
                         <td><button class="buttonNumber" id="buttonFive">5</button></td>
-                        <td><button class="buttonNumber" id="buttonSix">6</button></td>    
+                        <td><button class="buttonNumber" id="buttonFour">4</button></td>
                     </tr>
                     <tr>
+                        <td><button class="buttonNumber" id="buttonZero">0</button></td>
                         <td><button class="buttonNumber" id="buttonOne">1</button></td>
                         <td><button class="buttonNumber" id="buttonTwo">2</button></td>
                         <td><button class="buttonNumber" id="buttonThree">3</button></td>   
                     </tr>
-                    <tr>
-                        <td><button class="buttonNumber" id="buttonZero">0</button></td>
-                        <td><button class="buttonFunction" id="buttonParOpen">(</button></td>
-                        <td><button class="buttonFunction" id="buttonParClose">)</button></td>
-                    </tr>
                 </tbody>
             </table>
+            <button colspan="3" class="buttonFunction" id="buttonEqual">=</button>
         </div>
     </div>
     <script src="script.js"></script>

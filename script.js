@@ -1,5 +1,4 @@
 const displayOne = document.getElementById("displayOne");
-const displayTwo = document.getElementById("displayTwo");
 const buttonClear = document.getElementById("buttonClear");
 const buttonPer = document.getElementById("buttonPer");
 const buttonEqual = document.getElementById("buttonEqual");
@@ -81,7 +80,7 @@ buttonFunction.forEach(buttonFunct => {
             let funct = this.textContent;
             let displayOneContent = displayOne.textContent.trim(); 
             let lastChar = displayOneContent[displayOneContent.length - 1]; 
-            if (lastChar === '+' || lastChar === '-' || lastChar === '*' || lastChar === '/') {
+            if (lastChar === '+' || lastChar === '-' || lastChar === '*' || lastChar === '/'|| lastChar === '.') {
                 return;
             } else {
                 displayOne.textContent += funct;
@@ -98,10 +97,10 @@ buttonEqual.onclick = function() {
         return;
     }
     if (displayOne.textContent.length === MAX_CHARACTERS){
-        displayTwo.textContent = "limit reached";
+        displayOne.textContent = "limit reached";
     } else {
         let result = evaluateExpression(expression);
-        displayTwo.textContent = result;
+        displayOne.textContent = result;
         displayOne.textContent = expression.replace(/=/g, '');
     }
 
@@ -120,7 +119,6 @@ buttonPer.addEventListener("click", function() {
 
 buttonClear.onclick = function() {
     displayOne.textContent = "";
-    displayTwo.textContent = "";
 }
 
 buttonRem.onclick = function() {
@@ -132,3 +130,6 @@ buttonRem.onclick = function() {
         displayOne.textContent = displayOne.textContent.slice(0, -3);
     }
 }
+
+
+
