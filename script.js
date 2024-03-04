@@ -1,5 +1,6 @@
 const display = document.getElementById("display");
 const buttonClear = document.getElementById("buttonClear");
+const buttonPer = document.getElementById("buttonPer");
 const buttonEqual = document.getElementById("buttonEqual");
 const buttonNumber = document.querySelectorAll(".buttonNumber");
 const buttonFunction = document.querySelectorAll(".buttonFunction");
@@ -12,11 +13,12 @@ function evalManual(expression) {
 }
 
 function evaluateExpression(expression) {
-    var validChars = /^[0-9+\-*/().\s]+=?$/;
+    var validChars = /^[0-9+\-*/().\s%]+=?$/;
     if (!validChars.test(expression)) {
         return 'Erro';
     }
     try {
+        expression = expression.replace(/%/g, '*0.01');
         let result = evalManual(expression);
         if (!isFinite(result)) {
             return 'Erro';
@@ -27,14 +29,50 @@ function evaluateExpression(expression) {
     }
 }
 
+document.addEventListener('keydown', function(event) {
+    const key = event.key;
+    if (key === 'c' || key === 'C') {
+        buttonClear.click();
+        return;
+    }
+    if (display.textContent.length < MAX_CHARACTERS) {
+        if ((key >= '0' && key <= '9') || key === '.' || key === '+' || key === '-' || key === '*' || key === '/' || key === '%' || key === 'Enter' ){
+            if (key === 'Enter') {
+                buttonEqual.click();
+                return;
+            }
+            if (key === '%') {
+                buttonPer.click();
+            } else {
+                display.textContent += key;
+            }
+        }
+    }
+})
+
+buttonPer.addEventListener("click", function() {
+    display.textContent += '%';
+})
+
+buttonPer.addEventListener("click", function() {
+    let expression = display.textContent;
+    if (!expression.includes('%')) {
+        display.textContent += '%';
+    } else {
+        expression = expression.replace(/%/g, '*0.01');
+        let result = evaluateExpression(expression);
+        display.textContent = result * 100 + "*";
+    }
+})
+
 buttonNumber.forEach(buttonNum => {
     buttonNum.addEventListener("click", function() {
         if (display.textContent.length < MAX_CHARACTERS) {
             let number = this.textContent;
             display.textContent += number;
         }
-    });
-});
+    })
+})
 
 buttonFunction.forEach(buttonFunct => {
     buttonFunct.addEventListener("click", function() {
@@ -48,12 +86,8 @@ buttonFunction.forEach(buttonFunct => {
                 display.textContent += funct;
             }
         }
-    });
-});
-
-buttonClear.onclick = function() {
-    display.textContent = "";
-}
+    })
+})
 
 buttonEqual.onclick = function() {
     let expression = display.textContent;
@@ -64,4 +98,8 @@ buttonEqual.onclick = function() {
     }
     let result = evaluateExpression(expression);
     display.textContent = result;
+}
+
+buttonClear.onclick = function() {
+    display.textContent = "";
 }
