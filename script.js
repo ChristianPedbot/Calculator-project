@@ -6,8 +6,7 @@ const buttonRem = document.getElementById("buttonRem");
 const buttonNumber = document.querySelectorAll(".buttonNumber");
 const buttonFunction = document.querySelectorAll(".buttonFunction");
 
-
-const MAX_CHARACTERS = 15;
+const maxCharacteres = 15;
 
 function evalManual(expression) {
     expression = expression.replace(/=/g, '');
@@ -41,7 +40,7 @@ document.addEventListener('keydown', function(event) {
         buttonRem.click();
         return;
     }
-    if (displayOne.textContent.length < MAX_CHARACTERS) {
+    if (displayOne.textContent.length < maxCharacteres) {
         if ((key >= '0' && key <= '9') || key === '.' || key === '+' || key === '-' || key === '*' || key === '/' || key === '%' || key === 'Enter'|| key === '(' || key === ')'){
             if (key === 'Enter') {
                 buttonEqual.click();
@@ -64,9 +63,10 @@ buttonPer.addEventListener("click", function() {
 
 buttonNumber.forEach(buttonNum => {
     buttonNum.addEventListener("click", function() {
-        if (displayOne.textContent.length < MAX_CHARACTERS) {
+        if (displayOne.textContent.length < maxCharacteres) {
             let number = this.textContent;
-            if (number === '.' && displayOne.textContent.includes('.')) {
+            let expression = displayOne.textContent + number;
+            if (expression.match(/[0-9]+\.[0-9]+[^.]*\./)) {
                 return;
             }
             displayOne.textContent += number;
@@ -76,7 +76,7 @@ buttonNumber.forEach(buttonNum => {
 
 buttonFunction.forEach(buttonFunct => {
     buttonFunct.addEventListener("click", function() {
-        if (displayOne.textContent.length < MAX_CHARACTERS) {
+        if (displayOne.textContent.length < maxCharacteres) {
             let funct = this.textContent;
             let displayOneContent = displayOne.textContent.trim(); 
             let lastChar = displayOneContent[displayOneContent.length - 1]; 
@@ -89,21 +89,49 @@ buttonFunction.forEach(buttonFunct => {
     })
 })
 
+let firstNumber = '';
+let expression = '';
+let operator = '';
+
 buttonEqual.onclick = function() {
-    let expression = displayOne.textContent;
+    expression = displayOne.textContent;
+    let expressionSlipt = expression.split("");
+    if (expressionSlipt[1] === "+") {
+        operator = "+";
+    } else if (expressionSlipt[1] === "-"){
+        operator = "-";
+    } else if (expressionSlipt[1] === "*"){
+        operator = "*";
+    } else if (expressionSlipt[1] === "/"){
+        operator = "/";
+    }
     if (expression.includes('/0') || expression.includes('*0')) {
         displayOne.textContent = '0';
         expression = expression.replace(/=+$/, '');
         return;
     }
-    if (displayOne.textContent.length === MAX_CHARACTERS){
+    if (displayOne.textContent.length === maxCharacteres){
         displayOne.textContent = "limit reached";
     } else {
         let result = evaluateExpression(expression);
+        if (!firstNumber) {
+            firstNumber = expression.split(/[+\-*\/]/)[0];
+        } else {
+            if (operator === "+") {
+                result = result + parseInt(firstNumber);
+            }
+            else if (operator === "-") {
+                result = result - parseInt(firstNumber);
+            }
+            else if (operator === "*") {
+                result = result * parseInt(firstNumber);
+            }
+            else if (operator === "/") {
+                result = result / parseInt(firstNumber);
+            }
+        }
         displayOne.textContent = result;
-        displayOne.textContent = expression.replace(/=/g, '');
     }
-
 }
 
 buttonPer.addEventListener("click", function() {
@@ -124,7 +152,7 @@ buttonClear.onclick = function() {
 buttonRem.onclick = function() {
     if (displayOne.textContent.endsWith("<-")) {
         displayOne.textContent = displayOne.textContent.slice(0, -3);
-    } else if (displayOne.textContent.length >= MAX_CHARACTERS) {
+    } else if (displayOne.textContent.length >= maxCharacteres) {
         displayOne.textContent = displayOne.textContent.slice(0, -1);
     } else {
         displayOne.textContent = displayOne.textContent.slice(0, -3);
