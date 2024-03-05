@@ -30,6 +30,7 @@ function evaluateExpression(expression) {
     }
 }
 
+
 document.addEventListener('keydown', function(event) {
     const key = event.key;
     if (key === 'c' || key === 'C') {
@@ -66,7 +67,7 @@ buttonNumber.forEach(buttonNum => {
         if (displayOne.textContent.length < maxCharacteres) {
             let number = this.textContent;
             let expression = displayOne.textContent + number;
-            if (expression.match(/[0-9]+\.[0-9]+[^.]*\./)) {
+            if (expression.match(/[0-9]+\.\+[0-9]/)) {
                 return;
             }
             displayOne.textContent += number;
@@ -89,20 +90,22 @@ buttonFunction.forEach(buttonFunct => {
     })
 })
 
+
+
 let firstNumber = '';
 let expression = '';
 let operator = '';
 
-buttonEqual.onclick = function() {
+/*buttonEqual.onclick = function() {
     expression = displayOne.textContent;
-    let expressionSlipt = expression.split("");
-    if (expressionSlipt[1] === "+") {
-        operator = "+";
-    } else if (expressionSlipt[1] === "-"){
+    let expressionSplit = expression.split("");
+    if (expressionSplit[1] === "+") {
+        operator = "+"; 
+    } else if (expressionSplit[1] === "-"){
         operator = "-";
-    } else if (expressionSlipt[1] === "*"){
+    } else if (expressionSplit[1] === "*"){
         operator = "*";
-    } else if (expressionSlipt[1] === "/"){
+    } else if (expressionSplit[1] === "/"){
         operator = "/";
     }
     if (expression.includes('/0') || expression.includes('*0')) {
@@ -114,9 +117,7 @@ buttonEqual.onclick = function() {
         displayOne.textContent = "limit reached";
     } else {
         let result = evaluateExpression(expression);
-        if (!firstNumber) {
-            firstNumber = expression.split(/[+\-*\/]/)[0];
-        } else {
+        if (firstNumber !== '' && operator !== '') {
             if (operator === "+") {
                 result = result + parseInt(firstNumber);
             }
@@ -130,6 +131,26 @@ buttonEqual.onclick = function() {
                 result = result / parseInt(firstNumber);
             }
         }
+
+        displayOne.textContent = result;
+        if (!isNaN(result) && operator !== '') {
+            firstNumber = expression.split(/[+\-*\/]/)[0];
+        }
+    }
+
+
+}*/
+
+buttonEqual.onclick = function() {
+    let expression = displayOne.textContent;
+    if (expression.includes('/0') || expression.includes('*0')) {
+        displayOne.textContent = '0';
+        return;
+    }
+    if (displayOne.textContent.length === maxCharacteres){
+        displayOne.textContent = "limit reached";
+    } else {
+        let result = evaluateExpression(expression);
         displayOne.textContent = result;
     }
 }

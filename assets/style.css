@@ -21,7 +21,39 @@
     margin-left: 35%;
 }
 
-.container table button {
+#buttonClear{
+    background-color: red;
+}
+
+#buttonAdd{
+    color:rgb(0, 255, 0);
+}
+
+#buttonSub {
+    color: red;
+}
+
+#buttonMulti {
+    color:yellow;
+}
+
+#buttonDiv{
+    color:orange;
+}
+
+.buttonNumber {
+    width: 50px;
+    height: 50px;
+    font-size: 25px;
+    margin: 3px;
+    cursor: pointer;
+    background-color: rgb(206, 206, 206);
+    border: none;
+    color: rgb(0, 0, 0);
+    border-radius: 40%;
+    padding: 5px;
+}
+.buttonFunction {
     width: 50px;
     height: 50px;
     font-size: 25px;
@@ -34,8 +66,15 @@
     padding: 5px;
 }
 
-.container table button:hover {
-    background-color: black;
+.container table .buttonNumber:hover {
+    background-color: rgb(168, 168, 168);
+}
+
+.container table .buttonFunction:hover {
+    background-color: rgb(0, 0, 0);
+}
+.container table #buttonClear:hover {
+    background-color: rgb(202, 1, 1);
 }
 
 #buttonEqual {
@@ -70,3 +109,5 @@
     margin-top: 10px;
     margin-bottom: 15px;
 }
+
+
