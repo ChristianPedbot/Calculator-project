@@ -5,6 +5,7 @@ const buttonEqual = document.getElementById("buttonEqual");
 const buttonRem = document.getElementById("buttonRem");
 const buttonNumber = document.querySelectorAll(".buttonNumber");
 const buttonFunction = document.querySelectorAll(".buttonFunction");
+const buttonPoint = document.getElementById("buttonPoint");
 
 const maxCharacteres = 15;
 
@@ -29,7 +30,6 @@ function evaluateExpression(expression) {
         return 'Error';
     }
 }
-
 
 document.addEventListener('keydown', function(event) {
     const key = event.key;
@@ -62,18 +62,17 @@ buttonPer.addEventListener("click", function() {
     displayOne.textContent += '%';
 })
 
+let hasDecimal = false;
+
 buttonNumber.forEach(buttonNum => {
     buttonNum.addEventListener("click", function() {
         if (displayOne.textContent.length < maxCharacteres) {
             let number = this.textContent;
-            let expression = displayOne.textContent + number;
-            if (expression.match(/[0-9]+\.\+[0-9]/)) {
-                return;
-            }
             displayOne.textContent += number;
         }
     })
 })
+
 
 buttonFunction.forEach(buttonFunct => {
     buttonFunct.addEventListener("click", function() {
@@ -90,56 +89,7 @@ buttonFunction.forEach(buttonFunct => {
     })
 })
 
-
-
-let firstNumber = '';
-let expression = '';
-let operator = '';
-
-/*buttonEqual.onclick = function() {
-    expression = displayOne.textContent;
-    let expressionSplit = expression.split("");
-    if (expressionSplit[1] === "+") {
-        operator = "+"; 
-    } else if (expressionSplit[1] === "-"){
-        operator = "-";
-    } else if (expressionSplit[1] === "*"){
-        operator = "*";
-    } else if (expressionSplit[1] === "/"){
-        operator = "/";
-    }
-    if (expression.includes('/0') || expression.includes('*0')) {
-        displayOne.textContent = '0';
-        expression = expression.replace(/=+$/, '');
-        return;
-    }
-    if (displayOne.textContent.length === maxCharacteres){
-        displayOne.textContent = "limit reached";
-    } else {
-        let result = evaluateExpression(expression);
-        if (firstNumber !== '' && operator !== '') {
-            if (operator === "+") {
-                result = result + parseInt(firstNumber);
-            }
-            else if (operator === "-") {
-                result = result - parseInt(firstNumber);
-            }
-            else if (operator === "*") {
-                result = result * parseInt(firstNumber);
-            }
-            else if (operator === "/") {
-                result = result / parseInt(firstNumber);
-            }
-        }
-
-        displayOne.textContent = result;
-        if (!isNaN(result) && operator !== '') {
-            firstNumber = expression.split(/[+\-*\/]/)[0];
-        }
-    }
-
-
-}*/
+let lastExpression = '';
 
 buttonEqual.onclick = function() {
     let expression = displayOne.textContent;
@@ -151,9 +101,17 @@ buttonEqual.onclick = function() {
         displayOne.textContent = "limit reached";
     } else {
         let result = evaluateExpression(expression);
-        displayOne.textContent = result;
+        lastExpression = expression;
+        displayOne.textContent = String(result);
     }
 }
+
+buttonEqual.addEventListener("click", function() {
+    if (lastExpression) {
+        let result = eval(lastExpression);
+        displayOne.textContent = String(result);
+    }
+});
 
 buttonPer.addEventListener("click", function() {
     let expression = displayOne.textContent;
@@ -168,6 +126,7 @@ buttonPer.addEventListener("click", function() {
 
 buttonClear.onclick = function() {
     displayOne.textContent = "";
+    buttonPoint.disabled = false;
 }
 
 buttonRem.onclick = function() {
@@ -178,7 +137,13 @@ buttonRem.onclick = function() {
     } else {
         displayOne.textContent = displayOne.textContent.slice(0, -3);
     }
+    if (displayOne.textContent !== '.'){
+        buttonPoint.disabled = false;
+    }
 }
 
 
 
+buttonPoint.addEventListener("click", function() {
+    buttonPoint.disabled = true; // Desabilita o botão de ponto decimal
+});
