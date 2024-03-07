@@ -17,16 +17,16 @@ function evalManual(expression) {
 function evaluateExpression(expression) {
     var validChars = /^[0-9+\-*/().\s%]+=?$/;
     if (!validChars.test(expression)) {
-        return 'Erro';
+        return 'Error';
     }
     try {
         expression = expression.replace(/%/g, '*0.01');
         let result = evalManual(expression);
         if (!isFinite(result)) {
-            return 'Erro';
+            return 'Error';
         }
         return result;
-    } catch (error) {
+    } catch (error) {r
         return 'Error';
     }
 }
@@ -89,29 +89,37 @@ buttonFunction.forEach(buttonFunct => {
     })
 })
 
-let lastExpression = '';
-
 buttonEqual.onclick = function() {
     let expression = displayOne.textContent;
+    let result = evaluateExpression(expression);
+    displayOne.textContent = String(result);
+    console.log(result);
+    let operator = expression.match(/[\+\-\*\/]/);
+    operator = operator ? operator[0] : null;
+    
     if (expression.includes('/0') || expression.includes('*0')) {
         displayOne.textContent = '0';
-        return;
     }
     if (displayOne.textContent.length === maxCharacteres){
         displayOne.textContent = "limit reached";
-    } else {
-        let result = evaluateExpression(expression);
-        lastExpression = expression;
-        displayOne.textContent = String(result);
-    }
-}
+        return;
+    } 
+    let lastNumber = parseFloat(expression.split(operator).pop());
+    if (lastResult === null) {
+        lastResult = lastNumber;
 
-buttonEqual.addEventListener("click", function() {
-    if (lastExpression) {
-        let result = eval(lastExpression);
-        displayOne.textContent = String(result);
     }
-});
+    let conta = evaluateExpression(lastResult + operator + lastNumber);
+    if (conta !== result){
+        displayOne.textContent = result;
+    } 
+    else if (!expression.includes('+')){
+        displayOne.textContent = (conta);
+    }
+
+     
+
+}
 
 buttonPer.addEventListener("click", function() {
     let expression = displayOne.textContent;
@@ -120,16 +128,18 @@ buttonPer.addEventListener("click", function() {
     } else {
         expression = expression.replace(/%/g, '*0.01');
         let result = evaluateExpression(expression);
-        displayOne.textContent = result * 100 + "*";
+        displayOne.textContent = result * 100 + '*';
     }
 })
 
 buttonClear.onclick = function() {
     displayOne.textContent = "";
+    lastResult = null;
     buttonPoint.disabled = false;
 }
 
 buttonRem.onclick = function() {
+    lastResult = null;
     if (displayOne.textContent.endsWith("<-")) {
         displayOne.textContent = displayOne.textContent.slice(0, -3);
     } else if (displayOne.textContent.length >= maxCharacteres) {
@@ -142,8 +152,6 @@ buttonRem.onclick = function() {
     }
 }
 
-
-
 buttonPoint.addEventListener("click", function() {
-    buttonPoint.disabled = true; // Desabilita o botão de ponto decimal
+    buttonPoint.disabled = true; 
 });
